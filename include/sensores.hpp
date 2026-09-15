@@ -7,9 +7,13 @@ class SensorNivel : public Sensor {
 public:
     explicit SensorNivel(std::string tag) : Sensor(std::move(tag)) {}
 
-    double valor() const override { return valor_; }
+    double valor() const override {
+        return valor_;
+    }
 
-    std::string unidade() const override { return "%"; }
+    std::string unidade() const override {
+        return "%";
+    }
 
     bool atualizar(double leitura) override {
         if (!std::isfinite(leitura) || leitura < 0 || leitura > 100) return false;
@@ -27,9 +31,13 @@ class SensorTemperatura : public Sensor {
 public:
     explicit SensorTemperatura(std::string tag) : Sensor(std::move(tag)) {}
 
-    double valor() const override { return valor_; }
+    double valor() const override {
+        return valor_;
+    }
 
-    std::string unidade() const override { return "C"; }
+    std::string unidade() const override {
+        return "C";
+    }
 
     bool atualizar(double leitura) override {
         if (!std::isfinite(leitura) || leitura < -40 || leitura > 125) return false;
@@ -47,18 +55,21 @@ class SensorPressao : public Sensor {
 public:
     explicit SensorPressao(std::string tag) : Sensor(std::move(tag)) {}
 
-    double valor() const override { return valor_; }
+    double valor() const override {
+        return valor_;
+    }
 
-    std::string unidade() const override { return "bar"; }
+    std::string unidade() const override {
+        return "bar";
+    }
 
     bool atualizar(double leitura) override {
-        // TODO ETAPA 02: validar antes de alterar o estado.
-        (void)leitura;
-        return false;
+        if (!std::isfinite(leitura) || leitura < 0 || leitura > 10) return false;
+        valor_ = leitura;
+        return true;
     }
 
     bool emAlerta() const override {
-        // TODO: substituir o marcador pelo comportamento contratado.
-        return false;
+        return valor_ > 8;
     }
 };
